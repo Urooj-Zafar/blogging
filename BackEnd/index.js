@@ -10,6 +10,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 
@@ -20,7 +21,7 @@ app.listen(3000, () => {
 
 dataBase();
 
-app.use(cors());
+// app.use(cors());
 app.use("/users",UsersRoutes);
 app.use("/blogs",BlogsRoutes);
 app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));

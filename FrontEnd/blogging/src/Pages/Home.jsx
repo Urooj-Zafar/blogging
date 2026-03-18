@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import BlogCard from "../Components/BlogCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -6,7 +6,6 @@ import axios from "axios";
 export default function Home() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const location = useLocation();
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -19,7 +18,7 @@ export default function Home() {
       fetchedBlogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
       if (location.state?.newBlog) {
-  fetchedBlogs = [location.state.newBlog, ...fetchedBlogs];
+      fetchedBlogs = [location.state.newBlog, ...fetchedBlogs];
 }
 
 
@@ -54,12 +53,6 @@ export default function Home() {
         </p>
 
         <div className="mt-8">
-  <button
-    onClick={() => navigate("/createblog")}
-    className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 transition"
-  >
-    Create Blog
-  </button>
 </div>
       </section>
 

@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; 
 import BlogCard from "../Components/BlogCard";
 import axios from "axios";
-import { MdDelete } from "react-icons/md";
-import { MdModeEditOutline } from "react-icons/md";
+import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const navigate = useNavigate();
+
+  // Get logged-in user
+  const userId = JSON.parse(localStorage.getItem("user"))?._id;
 
   // Fetch categories from backend
   useEffect(() => {
@@ -24,22 +27,18 @@ export default function Categories() {
     fetchCategories();
   }, []);
 
-
-  
-
   const handleDelete = async (id) => {
-  if (!window.confirm("Are you sure you want to delete this category?")) return;
+    if (!window.confirm("Are you sure you want to delete this category?")) return;
 
-  try {
-    await axios.delete(`http://localhost:3000/categories/${id}`);
-    toast.success("You deleted Category Successfully!");
-    window.location.reload();
-  } catch (err) {
-    console.error(err.response || err);
-    alert("Delete failed");
-  }
-};
-
+    try {
+      await axios.delete(`http://localhost:3000/categories/${id}`);
+      toast.success("You deleted Category Successfully!");
+      window.location.reload();
+    } catch (err) {
+      console.error(err.response || err);
+      alert("Delete failed");
+    }
+  };
 
   // Fetch blogs when a category is selected
   useEffect(() => {
@@ -66,51 +65,51 @@ export default function Categories() {
       <section className="bg-black text-white text-center py-20 px-4 w-full">
         <h1 className="text-5xl font-bold mb-6">Blog Categories</h1>
 
-        <button
-    onClick={() => navigate("/createCategories")}
-    className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 transition"
-  >
-    Create Category
-  </button>
+      <button
+        onClick={() => navigate("/createCategories")}
+        className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 transition"
+      >
+        Create Category
+      </button>
       </section>
 
       {/* Categories Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-10">
-        {categories.map((cat) => (
-          <div
-            key={cat._id}
-            onClick={() => setSelectedCategory(cat.name)}
-            className={`cursor-pointer flex flex-col justify-center items-center p-6 rounded-xl shadow-md transition transform hover:-translate-y-1 duration-300
-              ${selectedCategory === cat.name ? "bg-orange-500 text-white" : "bg-white text-gray-800"}
-            `}
-          >
-            <img
-              src={cat.image ? `http://localhost:3000${cat.image}` : "/default.jpg"}
-              alt={cat.name}
-              className="h-32 w-32 mb-4 rounded-full object-cover"
-            />
-            <span className="text-lg font-semibold">{cat.name}</span>
-            <div className="absolute top-2 right-2 flex gap-2">
-                    <MdModeEditOutline
-                    size={18}className="cursor-pointer text-black"
+        {categories.map((cat) => {
+          return (
+            <div
+              key={cat._id}
+              onClick={() => setSelectedCategory(cat.name)}
+              className={`cursor-pointer flex flex-col justify-center items-center p-6 rounded-xl shadow-md transition transform hover:-translate-y-1 duration-300
+                ${selectedCategory === cat.name ? "bg-orange-500 text-white" : "bg-white text-gray-800"}
+              `}
+            >
+              <img
+                src={cat.image ? `http://localhost:3000${cat.image}` : "/default.jpg"}
+                alt={cat.name}
+                className="h-32 w-32 mb-4 rounded-full object-cover"
+              />
+              <span className="text-lg font-semibold">{cat.name}</span>
+
+                <div className="absolute top-2 right-2 flex gap-2">
+                  <MdModeEditOutline
+                    size={18}
+                    className="cursor-pointer text-black"
                     onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/createCategories/${cat._id}`);
+                      e.stopPropagation();
+                      navigate(`/createCategories/${cat._id}`);
                     }}
-                    />
-
-                    <MdDelete
-                      className="cursor-pointer text-red-500 hover:text-red-700"
-                      size={18}
-                      onClick={() => 
-                        handleDelete(cat._id)}
-                    />
-                  </div>
-          </div>
-        ))}
+                  />
+                  <MdDelete
+                    className="cursor-pointer text-red-500 hover:text-red-700"
+                    size={18}
+                    onClick={() => handleDelete(cat._id)}
+                  />
+                </div>
+            </div>
+          );
+        })}
       </div>
-
-
 
       {/* Blogs for selected category */}
       {selectedCategory && (

@@ -1,7 +1,11 @@
+import { toast } from "react-toastify";
 export default function Contact() {
   const inputStyle =
     "p-3 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-orange-500 transition";
 
+    const handleSubmit = () => {
+    alert("Your message submit successfully!");
+  };
   return (
     <div className="min-h-screen bg-gray-100">
       
@@ -33,6 +37,7 @@ export default function Contact() {
           <button
             type="submit"
             className="bg-orange-500 text-white py-3 px-6 rounded-full font-semibold hover:bg-orange-600 transition"
+            onClick={() => handleSubmit()}
           >
             Submit
           </button>

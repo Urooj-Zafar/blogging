@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import BlogCard from "../Components/BlogCard";
-
+import { useNavigate } from "react-router-dom";
 export default function Blogs() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   // Get logged-in user
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -51,6 +51,13 @@ export default function Blogs() {
       {/* Page Header */}
       <section className="bg-black text-white text-center py-20 px-4 w-full">
         <h1 className="text-5xl font-bold mb-6">Our Blogs</h1>
+
+        <button
+    onClick={() => navigate("/createblog")}
+    className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 transition"
+  >
+    Create Blog
+  </button>
       </section>
 
       {/* Loading message */}

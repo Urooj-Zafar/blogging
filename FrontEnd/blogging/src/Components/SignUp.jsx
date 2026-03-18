@@ -66,7 +66,7 @@ export default function SignUp({ closeModal }) {
         />
 
         <div className="flex justify-center gap-5 mt-5">
-          <button onClick={closeModal} className="bg-gray-500 p-2 rounded-md">
+          <button onClick={closeModal} className="bg-gray-400 p-2 rounded-md">
             Cancel
           </button>
           <button

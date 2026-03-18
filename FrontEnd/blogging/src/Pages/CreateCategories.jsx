@@ -24,28 +24,6 @@ function CreateCategory() {
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
 
-  // Fetch category if editing
-  useEffect(() => {
-    if (!isEdit) return;
-
-    const fetchCategory = async () => {
-      try {
-        const res = await axios.get(`http://localhost:3000/categories/${id}`);
-        // Only allow author to edit
-        if (res.data.data.author._id !== user._id) {
-          alert("You are not authorized to edit this category!");
-          navigate("/categories");
-          return;
-        }
-        setName(res.data.data.name);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to load category");
-      }
-    };
-
-    fetchCategory();
-  }, [id, isEdit, navigate, user._id]);
 
   const handleSubmit = async () => {
     if (!name) return setError("Category name required");
@@ -79,7 +57,8 @@ function CreateCategory() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-10 bg-white rounded shadow-xl">
+    <div className="bg-gray-100 h-sreen p-10">
+      <div className="max-w-md mx-auto mt-10 p-10 rounded shadow-xl bg-white">
       <h2 className="text-xl font-bold mb-3 text-center">
         {isEdit ? "Edit Category" : "Create Category"}
       </h2>
@@ -105,6 +84,7 @@ function CreateCategory() {
       >
         {isEdit ? "Update Category" : "Create Category"}
       </button>
+    </div>
     </div>
   );
 }

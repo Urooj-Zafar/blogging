@@ -1,60 +1,140 @@
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-export default function Footer() {
+export default function Footer({ openSignIn }) {
+
+  const handleCreateBlog = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      openSignIn();
+      return;
+    }
+
+    window.location.href = "/createblog";
+  };
+
   return (
     <footer className="bg-black text-white mt-10">
-      
-      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
-        
+
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+        {/* Brand */}
         <div>
-          <h2 className="text-xl font-bold mb-3">BrainCrafters</h2>
-          <p className="text-gray-300 text-sm">
-            Sharing ideas, insights, and stories with the world.
-Your daily dose of creativity, tech, lifestyle, and inspiration.
+          <h2 className="text-2xl font-bold mb-4">
+            BrainCrafters
+          </h2>
+
+          <p className="text-gray-300 text-sm leading-7">
+            A platform where creators share knowledge,
+            ideas, and stories through meaningful blogs.
           </p>
         </div>
 
+
+        {/* Explore */}
         <div>
-          <h2 className="text-xl font-bold mb-3">Company</h2>
-          <ul className="text-gray-300 text-sm space-y-1">
-            <li><a href="/About" className="hover:text-orange-500 transition">About Us</a></li>
-            <li><a href="/Contact" className="hover:text-orange-500 transition">Join our Team</a></li>
-            <li><a href="/Blogs" className="hover:text-orange-500 transition">Read Blog</a></li>
-            <li><a href="#" className="hover:text-orange-500 transition">Press</a></li>
+          <h2 className="text-xl font-bold mb-4">
+            Explore
+          </h2>
+
+          <ul className="space-y-3 text-gray-300 text-sm">
+
+            <li>
+              <Link 
+                to="/"
+                className="hover:text-orange-500 transition"
+              >
+                Home
+              </Link>
+            </li>
+
+            <li>
+              <Link 
+                to="/blogs"
+                className="hover:text-orange-500 transition"
+              >
+                Blogs
+              </Link>
+            </li>
+
+            <li>
+              <Link 
+                to="/categories"
+                className="hover:text-orange-500 transition"
+              >
+                Categories
+              </Link>
+            </li>
+
+            
+
           </ul>
         </div>
 
+
+        {/* Community */}
         <div>
-          <h2 className="text-xl font-bold mb-3">Services</h2>
-          <ul className="text-gray-300 text-sm space-y-1">
-            <li><a href="#" className="hover:text-orange-500 transition">Pricing</a></li>
-            <li><a href="#" className="hover:text-orange-500 transition">Documentation</a></li>
-            <li><a href="#" className="hover:text-orange-500 transition">Support</a></li>
+          <h2 className="text-xl font-bold mb-4">
+            Community
+          </h2>
+
+          <ul className="space-y-3 text-gray-300 text-sm">
+
+
+            <li>
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=braincrafter.blog@gmail.com&su=Report%20an%20Issue%20-%20BrainCrafters&body=Page%20or%20Feature:%0A%0AIssue%20Description:%0A%0ADevice:%0A%0A"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-orange-500 transition"
+              >
+                Report an Issue
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=braincrafter.blog@gmail.com&su=Suggestion%20for%20BrainCrafters%20Improvement&body=Suggestion%20Title:%0A%0ADescription:%0A%0AHow%20it%20can%20improve%20BrainCrafters:%0A%0A"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-orange-500 transition"
+              >
+                Suggest an Idea
+              </a>
+            </li>
+
           </ul>
         </div>
 
+
+        {/* Platform */}
         <div>
-          <h2 className="text-xl font-bold mb-3">Find Us</h2>
-          <p className="text-gray-300 text-sm">
-            123 Grand Rama IX,<br />
-            Krung Thep Maha Nakhan 10400
-          </p>
+          <h2 className="text-xl font-bold mb-4">
+            Why BrainCrafters?
+          </h2>
+
+          <ul className="text-gray-300 text-sm space-y-3">
+
+            <li>✨ Share your knowledge</li>
+            <li>📚 Learn from creators</li>
+            <li>✍️ Become an author</li>
+            <li>🚀 Grow with the community</li>
+
+          </ul>
         </div>
+
       </div>
 
-      <div className="border-t border-gray-700 mt-6 py-4 px-10 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0">
+
+      {/* Bottom */}
+      <div className="border-t border-gray-700 py-5 text-center">
+
         <p className="text-gray-400 text-sm">
-          &copy; 2025 Your Company
+          © 2026 BrainCrafters. All rights reserved.
         </p>
-        <div className="flex items-center gap-4">
-          <span className="text-gray-400 text-sm">Call us (+86)010-020-0340</span>
-          <div className="flex gap-3 text-gray-400 text-lg ">
-            <a href="#" className="hover:text-orange-500 transition"><FaFacebookF /></a>
-            <a href="#" className="hover:text-orange-500 transition"><FaTwitter /></a>
-            <a href="#" className="hover:text-orange-500 transition"><FaInstagram /></a>
-          </div>
-        </div>
+
       </div>
+
     </footer>
   );
 }

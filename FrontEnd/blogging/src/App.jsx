@@ -7,15 +7,19 @@ import { useState } from "react";
 import Nav from "./Components/Nav";
 import Model from "./Components/Model";
 import SignUp from "./Components/SignUp";
-
+import VerifyOTP from "./Pages/VerifyOTP";
 import Home from "./Pages/Home";
+import Dashboard from "./Pages/Dashboard";
 import About from "./Pages/About";
 import Blogs from "./Pages/Blogs";
 import BlogDetail from "./Pages/BlogDetail";
 import Categories from "./Pages/Categories";
-import Contact from "./Pages/Contact";
+import Profile from "./Pages/Profile";
 import CreateBlog from "./Pages/CreateBlog";
 import CreateCategories from "./Pages/CreateCategories";
+import ManageBlogs from "./Pages/ManageBlogs";
+import ManageUsers from "./Pages/ManageUsers";
+import ManageCategories from "./Pages/ManageCategories";
 import Footer from "./Components/Footer";
 
 export default function App() {
@@ -36,23 +40,34 @@ export default function App() {
       <Nav openSignIn={openSignIn} />
 
       <Routes>
-        {!isLogin && (
-          <Route path="*" element={<Model />} />
-        )}
-        {isLogin && (
+        
           <>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/blogs" element={<Blogs />} />
+        <Route 
+        path="/blogs" 
+        element={<Blogs openSignIn={openSignIn} />} 
+        />
         <Route path="/categories" element={<Categories />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/createblog" element={<CreateBlog />} />
         <Route path="/createblog/:id" element={<CreateBlog />} />
         <Route path="/createCategories" element={<CreateCategories />} />
+        <Route 
+        path="/verify-otp" 
+        element={
+        <VerifyOTP 
+        openSignIn={openSignIn}
+        />
+        } 
+/>
         <Route path="/createCategories/:id" element={<CreateCategories />} />
+        <Route path="/admin" element={<Dashboard />} />
+        <Route path="/admin/users" element={<ManageUsers />} />
+        <Route path="/admin/blogs" element={<ManageBlogs />} />
+        <Route path="/admin/categories" element={<ManageCategories />} />
         <Route path="/blogs/:id" element={<BlogDetail />} />
         </>
-        )}
 
       </Routes>
 

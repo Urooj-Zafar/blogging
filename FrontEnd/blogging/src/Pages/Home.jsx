@@ -42,7 +42,7 @@ export default function Home() {
   }, [location.state]);
 
   const latestBlogs = blogs.slice(0, 4);
-  const previewBlogs = blogs.slice(0, 8);
+  const previewBlogs = blogs.slice(4, 8);
 
   return (
     <div>

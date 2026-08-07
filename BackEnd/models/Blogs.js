@@ -29,6 +29,10 @@ const blogSchema = new mongoose.Schema({
     ref: "Users",
     required: true, 
   },
-});
+},
+{
+    timestamps: true
+}
+);
 
 export default mongoose.model("Blogs", blogSchema);

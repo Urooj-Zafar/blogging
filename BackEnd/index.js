@@ -1,28 +1,35 @@
-import express from "express";
-import cors from "cors";
-import dataBase from "./dataBase.js";
-import path from "path";
-import UsersRoutes from "./routes/Users.js";
-import BlogsRoutes from "./routes/Blogs.js";
-import CategoriesRoutes from "./routes/Categories.js";
 import dotenv from "dotenv";
-
 dotenv.config();
 
+import express from "express";
+import cors from "cors";
+import path from "path";
+import dataBase from "./dataBase.js";
+
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-
-
-app.listen(3000, () => {
-    console.log("server running");
-});
-
+// Connect Database
 dataBase();
 
-// app.use(cors());
-app.use("/users",UsersRoutes);
-app.use("/blogs",BlogsRoutes);
+// Static Files
 app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));
-app.use("/categories",CategoriesRoutes);
+
+// Load routes AFTER dotenv
+const UsersRoutes = (await import("./routes/Users.js")).default;
+const BlogsRoutes = (await import("./routes/Blogs.js")).default;
+const CategoriesRoutes = (await import("./routes/Categories.js")).default;
+
+// Routes
+app.use("/users", UsersRoutes);
+app.use("/blogs", BlogsRoutes);
+app.use("/categories", CategoriesRoutes);
+
+// Start Server
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

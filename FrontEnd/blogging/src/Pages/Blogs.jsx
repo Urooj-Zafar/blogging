@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import BlogCard from "../Components/BlogCard";
 import { useNavigate } from "react-router-dom";
-export default function Blogs() {
+export default function Blogs({openSignIn}) {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -20,7 +20,6 @@ export default function Blogs() {
         const res = await axios.get("http://localhost:3000/blogs");
         let fetchedBlogs = res.data.data || [];
 
-        // Format date and sort latest first
         fetchedBlogs = fetchedBlogs
           .map((blog) => ({
             ...blog,
@@ -32,7 +31,7 @@ export default function Blogs() {
               minute: "2-digit",
             }),
           }))
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          
 
         setBlogs(fetchedBlogs);
         setLoading(false);
@@ -53,11 +52,20 @@ export default function Blogs() {
         <h1 className="text-5xl font-bold mb-6">Our Blogs</h1>
 
         <button
-    onClick={() => navigate("/createblog")}
-    className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 transition"
-  >
-    Create Blog
-  </button>
+  onClick={() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      openSignIn();
+      return;
+    }
+
+    navigate("/createblog");
+  }}
+  className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 transition"
+>
+  Create Blog
+        </button>
       </section>
 
       {/* Loading message */}
@@ -77,7 +85,7 @@ export default function Blogs() {
             category={blog.category?.name || blog.category}
             description={blog.description}
             image={blog.image}
-            authorId={blog.author._id}
+            authorId={blog.author?._id}
             userId={user?._id}
             onDeleteSuccess={handleDeleteSuccess}
           />

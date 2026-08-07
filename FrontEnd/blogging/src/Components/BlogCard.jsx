@@ -11,14 +11,16 @@ export default function BlogCard({
   authorId,
   userId, // optional
   onDeleteSuccess,
+  showActions,
   date,
 }) {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
+  const user = JSON.parse(localStorage.getItem("user") || "null");
   // Show icons ONLY if both IDs exist AND match
-  const showIcons = authorId && userId && authorId === userId;
-
+  const isAdmin = user?.role === "admin";
+  const showIcons = showActions && (isAdmin || authorId === userId);
+ 
   const handleDelete = async (e) => {
     e.stopPropagation();
     if (!window.confirm("Delete this blog?")) return;

@@ -21,7 +21,7 @@ export default function Footer({ openSignIn }) {
         {/* Brand */}
         <div>
           <h2 className="text-2xl font-bold mb-4">
-            BrainCrafters
+            BrainCrafter
           </h2>
 
           <p className="text-gray-300 text-sm leading-7">
@@ -110,7 +110,7 @@ export default function Footer({ openSignIn }) {
         {/* Platform */}
         <div>
           <h2 className="text-xl font-bold mb-4">
-            Why BrainCrafters?
+            Why BrainCrafter?
           </h2>
 
           <ul className="text-gray-300 text-sm space-y-3">
@@ -130,7 +130,7 @@ export default function Footer({ openSignIn }) {
       <div className="border-t border-gray-700 py-5 text-center">
 
         <p className="text-gray-400 text-sm">
-          © 2026 BrainCrafters. All rights reserved.
+          © 2026 BrainCrafter. All rights reserved.
         </p>
 
       </div>

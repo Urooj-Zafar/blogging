@@ -31,7 +31,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
+    profileImage: {
+    type: String,
+    default: "/uploads/default-profile.png",
+    },
     otp: {
       type: String,
       default: null,

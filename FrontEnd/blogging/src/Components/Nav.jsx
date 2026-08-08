@@ -48,22 +48,16 @@ export default function Nav({ openSignIn }) {
     <div className="sticky top-0 z-50 backdrop-blur-md bg-black text-white">
       <nav className="flex justify-between items-center gap-2 md:gap-6 xl:gap-10 p-2 md:px-5 xl:px-10 xl:p-5 shadow-sm w-full">
 
-        {/* Logo */}
         <div className="flex items-center gap-2 xl:gap-3">
-          <div className="w-6 xl:w-10">
+          <div className="w-15 xl:w-20">
             <img
-              src="/blogger-color-icon.png"
+              src="/Logo.png"
               alt="logo"
               className="w-full"
             />
           </div>
-
-          <div className="font-bold text-sm md:text-base xl:text-xl">
-            BrainCrafters
-          </div>
         </div>
 
-        {/* Desktop Links */}
         <div className="flex gap-5">
           <div className="hidden md:flex gap-3 xl:gap-5 font-bold">
           {links.map((v, i) => (

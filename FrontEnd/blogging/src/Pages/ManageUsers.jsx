@@ -47,9 +47,7 @@ export default function ManageUsers() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
-
-      {/* Header */}
+    <div className="p-4 sm:p-6">
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold">
           Manage Users
@@ -63,9 +61,7 @@ export default function ManageUsers() {
         </button>
       </div>
 
-      {/* Users */}
       <div className="space-y-4">
-
         {users.length === 0 ? (
           <div className="bg-white rounded-xl shadow p-6 text-center text-gray-500">
             No users found.
@@ -77,21 +73,32 @@ export default function ManageUsers() {
               className="bg-white rounded-xl shadow p-5"
             >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                <div className="flex items-center gap-4 flex-1">
+                  <img
+                    src={
+                      user.profileImage
+                        ? `http://localhost:3000${user.profileImage}`
+                        : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                            user.name || "User"
+                          )}`
+                    }
+                    alt={user.name}
+                    className="w-16 h-16 rounded-full object-cover border-2 border-orange-500 flex-shrink-0"
+                  />
 
-                <div className="flex-1">
+                  <div>
+                    <h2 className="text-lg font-bold">
+                      {user.name}
+                    </h2>
 
-                  <h2 className="text-lg font-bold">
-                    {user.name}
-                  </h2>
+                    <p className="text-gray-600 break-all">
+                      {user.email}
+                    </p>
 
-                  <p className="text-gray-600 break-all">
-                    {user.email}
-                  </p>
-
-                  <span className="inline-block mt-2 px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-sm capitalize">
-                    {user.role}
-                  </span>
-
+                    <span className="inline-block mt-2 px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-sm capitalize">
+                      {user.role}
+                    </span>
+                  </div>
                 </div>
 
                 {user.role !== "admin" && (
@@ -101,12 +108,10 @@ export default function ManageUsers() {
                     onClick={() => handleDelete(user._id)}
                   />
                 )}
-
               </div>
             </div>
           ))
         )}
-
       </div>
     </div>
   );

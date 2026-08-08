@@ -57,7 +57,7 @@ export default function ManageBlogs() {
   </div>
 
   <div className="bg-white rounded-xl shadow overflow-hidden">
-  {/* Header (hidden on mobile) */}
+
   <div className="hidden md:grid grid-cols-12 bg-orange-500 text-white font-semibold p-4">
     <div className="col-span-2">Image</div>
     <div className="col-span-7">Title</div>
@@ -69,7 +69,7 @@ export default function ManageBlogs() {
       key={blog._id}
       className="group border-b p-4 hover:bg-gray-50 transition"
     >
-      {/* Main Row */}
+
       <div className="grid grid-cols-12 items-center gap-4">
 
         <div className="col-span-3 md:col-span-2">
@@ -105,7 +105,6 @@ export default function ManageBlogs() {
         </div>
       </div>
 
-      {/* Details */}
       <div className="mt-3 hidden group-hover:block md:block text-sm text-gray-600">
         <p><span className="font-semibold">Category:</span> {blog.category?.name}</p>
         <p><span className="font-semibold">Author:</span> {blog.author?.name}</p>

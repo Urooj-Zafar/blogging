@@ -139,6 +139,7 @@ async function login(req, res) {
         name:user.name,
         email:user.email,
         role:user.role,
+        profileImage: user.profileImage,
       }
 
     });
@@ -381,6 +382,79 @@ export async function getAllUsers(req,res){
 
 }
 
+
+
+export async function updateProfile(req, res) {
+  try {
+    const { id } = req.params;
+    const { name, email, password } = req.body;
+
+    const user = await Users.findById(id);
+
+    if (!user) {
+      return res.status(404).json({
+        status: false,
+        message: "User not found",
+      });
+    }
+
+    // Check if new email already belongs to another user
+    if (email && email !== user.email) {
+      const emailExists = await Users.findOne({
+        email,
+        _id: { $ne: id },
+      });
+
+      if (emailExists) {
+        return res.status(400).json({
+          status: false,
+          message: "Email is already in use",
+        });
+      }
+
+      user.email = email;
+    }
+
+    // Update name
+    if (name && name.trim() !== "") {
+      user.name = name.trim();
+    }
+
+    // Update password
+    if (password && password.trim() !== "") {
+      user.password = await bcrypt.hash(password, 10);
+    }
+
+    // Update profile image
+    if (req.file) {
+      user.profileImage =
+        "/uploads/profiles/" + req.file.filename;
+    }
+
+    await user.save();
+
+    return res.status(200).json({
+      status: true,
+      message: "Profile updated successfully",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        isVerified: user.isVerified,
+        profileImage: user.profileImage,
+      },
+    });
+
+  } catch (err) {
+    console.log("Update profile error:", err);
+
+    return res.status(500).json({
+      status: false,
+      message: "Server error while updating profile",
+    });
+  }
+}
 
 
 

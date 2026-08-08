@@ -50,9 +50,11 @@ export default function Categories() {
   return (
     <div>
 
-      <h1 className="text-4xl font-bold text-center mt-10">
-        Blog Categories
-      </h1>
+      <section className="bg-black text-white text-center py-20 px-4 w-full">
+        <h1 className="text-5xl font-bold mb-6">Blogs Categories</h1>
+
+        
+      </section>
 
 
       {/* Categories */}

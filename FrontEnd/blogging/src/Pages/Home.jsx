@@ -32,7 +32,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // If coming from CreateBlog, prepend newBlog
     if (location.state?.newBlog) {
       fetchBlogs(location.state.newBlog);
       window.history.replaceState({}, ""); // clear state
@@ -47,7 +46,7 @@ export default function Home() {
   return (
     <div>
       <section className="bg-black text-white text-center py-20 px-4">
-        <h1 className="text-5xl font-bold mb-6">Welcome to BrainCrafters</h1>
+        <h1 className="text-5xl font-bold mb-6">Welcome to BrainCrafter</h1>
         <p className="text-lg max-w-3xl mx-auto">
           Discover a world of insights, stories, and ideas—crafted to inform, inspire, and spark curiosity.
         </p>

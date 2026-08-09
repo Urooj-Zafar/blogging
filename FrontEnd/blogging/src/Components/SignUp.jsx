@@ -70,7 +70,7 @@ export default function SignUp({ closeModal }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50">
 
-      <div className="bg-white p-6 rounded-lg w-96">
+      <div className="bg-white p-5 sm:p-6 rounded-lg w-[90%] max-w-sm">
 
 
         <h2 className="text-2xl font-bold text-center mb-4">

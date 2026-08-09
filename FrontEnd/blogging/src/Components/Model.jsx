@@ -74,7 +74,7 @@ export default function Model({ closeModal, openSignUp }) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
 
-      <div className="bg-white p-8 rounded-xl w-full max-w-md">
+      <div className="bg-white p-5 sm:p-6 rounded-lg w-[90%] max-w-sm">
 
         <h2 className="text-2xl font-bold text-center mb-5">
           Sign In

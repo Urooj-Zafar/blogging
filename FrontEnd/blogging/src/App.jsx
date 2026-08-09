@@ -3,7 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { useState } from "react";
-
+import ScrollToTop from "./Components/ScrollToTop";
 import Nav from "./Components/Nav";
 import Model from "./Components/Model";
 import SignUp from "./Components/SignUp";
@@ -37,6 +37,7 @@ export default function App() {
   const isLogin = !!token;                           // true if logged in
   return (
     <BrowserRouter>
+    <ScrollToTop />
       <Nav openSignIn={openSignIn} />
 
       <Routes>

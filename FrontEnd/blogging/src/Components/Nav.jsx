@@ -9,6 +9,8 @@ export default function Nav({ openSignIn }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const navRef = useRef(null);
+  const mobileMenuRef = useRef(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -22,18 +24,21 @@ export default function Nav({ openSignIn }) {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target)
-      ) {
-        setDropdownOpen(false);
-      }
+  menuOpen &&
+  mobileMenuRef.current &&
+  navRef.current &&
+  !mobileMenuRef.current.contains(e.target) &&
+  !navRef.current.contains(e.target)
+) {
+  setMenuOpen(false);
+}
     };
 
     document.addEventListener("mousedown", handleClickOutside);
 
     return () =>
       document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [menuOpen]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -77,8 +82,7 @@ export default function Nav({ openSignIn }) {
           ))}
         </div>
 
-        {/* Right Side */}
-        <div className="flex items-center gap-3 relative" ref={dropdownRef}>
+        <div className="flex items-center gap-3 relative" ref={navRef}>
 
           {!user ? (
             <>
@@ -155,7 +159,8 @@ export default function Nav({ openSignIn }) {
 
       {/* Mobile Menu */}
       <div
-        className={`absolute top-10 left-0 h-full w-64 md:hidden bg-black/90 backdrop-blur-md text-white shadow-md transform transition-transform duration-500 ease-in-out z-50 ${
+       ref={mobileMenuRef}
+        className={`absolute top-16 left-0 h-full w-64 md:hidden bg-black/90 backdrop-blur-md text-white shadow-md transform transition-transform duration-500 ease-in-out z-50 ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

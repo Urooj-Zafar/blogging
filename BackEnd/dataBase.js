@@ -7,6 +7,6 @@ export default async function dataBase(){
 
   }
   catch(e){
-    console.log(e);
+    console.log("Error connecting to MongoDB:", e);
   }
 }

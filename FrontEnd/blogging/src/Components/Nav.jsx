@@ -21,39 +21,35 @@ export default function Nav({ openSignIn }) {
     { path: "/categories", aName: "Categories" },
   ];
 
-  useEffect(() => {
-const handleClickOutside = (e) => {
-// Close profile dropdown when clicking outside
-if (
-dropdownOpen &&
-navRef.current &&
-!navRef.current.contains(e.target)
-) {
-setDropdownOpen(false);
-}
+ useEffect(() => {
+  const handleClickOutside = (e) => {
+    // Close profile dropdown when clicking outside navbar/profile area
+    if (
+      dropdownOpen &&
+      navRef.current &&
+      !navRef.current.contains(e.target)
+    ) {
+      setDropdownOpen(false);
+    }
 
-```
-// Close mobile menu when clicking outside
-if (
-  menuOpen &&
-  mobileMenuRef.current &&
-  navRef.current &&
-  !mobileMenuRef.current.contains(e.target) &&
-  !navRef.current.contains(e.target)
-) {
-  setMenuOpen(false);
-}
-```
+    // Close mobile sidebar when clicking outside sidebar AND navbar
+    if (
+      menuOpen &&
+      mobileMenuRef.current &&
+      !mobileMenuRef.current.contains(e.target) &&
+      navRef.current &&
+      !navRef.current.contains(e.target)
+    ) {
+      setMenuOpen(false);
+    }
+  };
 
-};
+  document.addEventListener("mousedown", handleClickOutside);
 
-document.addEventListener("mousedown", handleClickOutside);
-
-return () => {
-document.removeEventListener("mousedown", handleClickOutside);
-};
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
 }, [dropdownOpen, menuOpen]);
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");

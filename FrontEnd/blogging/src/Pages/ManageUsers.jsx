@@ -76,9 +76,8 @@ export default function ManageUsers() {
                 <div className="flex items-center gap-4 flex-1">
                   <img
                     src={
-                      user.profileImage
-                        ? `${import.meta.env.VITE_API_URL}${user.profileImage}`
-                        : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                      user.profileImage ||
+                         `https://ui-avatars.com/api/?name=${encodeURIComponent(
                             user.name || "User"
                           )}`
                     }

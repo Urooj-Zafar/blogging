@@ -41,7 +41,7 @@ export default function BlogCard({
       className="cursor-pointer bg-white rounded-xl shadow-md p-4 pt-10 hover:shadow-xl transition relative transform hover:-translate-y-1 duration-300"
     >
       <img
-        src={image ? `${import.meta.env.VITE_API_URL}${image}` : "/default.jpg"}
+        src={image || "/default.jpg"}
         alt={title}
         className="h-40 w-full object-cover rounded mb-3"
       />

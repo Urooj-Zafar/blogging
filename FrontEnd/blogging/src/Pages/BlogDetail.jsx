@@ -46,7 +46,7 @@ export default function BlogDetail() {
 
 
       <img
-        src={`${import.meta.env.VITE_API_URL}${blog.image}`}
+        src={blog.image}
         className="w-full h-80 object-cover rounded mb-6"
         alt={blog.title}
       />

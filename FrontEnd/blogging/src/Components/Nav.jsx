@@ -22,8 +22,19 @@ export default function Nav({ openSignIn }) {
   ];
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (
+const handleClickOutside = (e) => {
+// Close profile dropdown when clicking outside
+if (
+dropdownOpen &&
+navRef.current &&
+!navRef.current.contains(e.target)
+) {
+setDropdownOpen(false);
+}
+
+```
+// Close mobile menu when clicking outside
+if (
   menuOpen &&
   mobileMenuRef.current &&
   navRef.current &&
@@ -32,13 +43,16 @@ export default function Nav({ openSignIn }) {
 ) {
   setMenuOpen(false);
 }
-    };
+```
 
-    document.addEventListener("mousedown", handleClickOutside);
+};
 
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
-  }, [menuOpen]);
+document.addEventListener("mousedown", handleClickOutside);
+
+return () => {
+document.removeEventListener("mousedown", handleClickOutside);
+};
+}, [dropdownOpen, menuOpen]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");

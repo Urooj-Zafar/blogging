@@ -332,12 +332,18 @@ export async function updateProfile(req, res) {
 
     // Upload profile image to Cloudinary
     if (req.file) {
-      const result = await uploadToCloudinary(
-        req.file.buffer
-      );
+  const result = await uploadToCloudinary(
+    req.file.buffer
+  );
 
-      user.profileImage = result.secure_url;
-    }
+  console.log("CLOUDINARY URL:", result.secure_url);
+
+  user.profileImage = result.secure_url;
+}
+
+await user.save();
+
+console.log("SAVED PROFILE IMAGE:", user.profileImage);
 
     await user.save();
 

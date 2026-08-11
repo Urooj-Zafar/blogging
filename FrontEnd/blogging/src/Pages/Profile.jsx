@@ -167,7 +167,7 @@ export default function Profile() {
             <img
               src={
                 user?.profileImage
-                  ? `${import.meta.env.VITE_API_URL}${user.profileImage}`
+                  ? user.profileImage
                   : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                       user?.name || "User"
                     )}`
@@ -287,7 +287,7 @@ export default function Profile() {
                   selectedFile
                     ? URL.createObjectURL(selectedFile)
                     : user?.profileImage
-                    ? `${import.meta.env.VITE_API_URL}${user.profileImage}`
+                    ? user.profileImage
                     : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                         user?.name || "User"
                       )}`

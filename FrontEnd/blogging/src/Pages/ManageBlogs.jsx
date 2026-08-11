@@ -75,9 +75,7 @@ export default function ManageBlogs() {
         <div className="col-span-3 md:col-span-2">
           <img
             src={
-              blog.image
-                ? `${import.meta.env.VITE_API_URL}${blog.image}`
-                : "/default.jpg"
+              blog.image ||"/default.jpg"
             }
             alt={blog.title}
             className="w-20 h-16 rounded object-cover"

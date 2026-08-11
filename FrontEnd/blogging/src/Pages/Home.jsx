@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BlogCard from "../Components/BlogCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -6,21 +6,19 @@ import axios from "axios";
 export default function Home() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("token");
-
-  const fetchBlogs = async (prependBlog = null) => {
+  const fetchBlogs = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/blogs`);
-      let fetchedBlogs = res.data.data || [];
-      fetchedBlogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blogs`
+      );
 
-      if (location.state?.newBlog) {
-      fetchedBlogs = [location.state.newBlog, ...fetchedBlogs];
-}
+      const fetchedBlogs = res.data.data || [];
 
+      fetchedBlogs.sort(
+        (a, b) =>
+          new Date(b.createdAt) - new Date(a.createdAt)
+      );
 
       setBlogs(fetchedBlogs);
       setLoading(false);
@@ -32,13 +30,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (location.state?.newBlog) {
-      fetchBlogs(location.state.newBlog);
-      window.history.replaceState({}, ""); // clear state
-    } else {
-      fetchBlogs();
-    }
-  }, [location.state]);
+    fetchBlogs();
+  }, []);
 
   const latestBlogs = blogs.slice(0, 4);
   const previewBlogs = blogs.slice(4, 8);
@@ -46,13 +39,14 @@ export default function Home() {
   return (
     <div>
       <section className="bg-black text-white text-center py-20 px-4">
-        <h1 className="text-5xl font-bold mb-6">Welcome to BrainCrafter</h1>
-        <p className="text-lg max-w-3xl mx-auto">
-          Discover a world of insights, stories, and ideas—crafted to inform, inspire, and spark curiosity.
-        </p>
+        <h1 className="text-5xl font-bold mb-6">
+          Welcome to BrainCrafter
+        </h1>
 
-        <div className="mt-8">
-</div>
+        <p className="text-lg max-w-3xl mx-auto">
+          Discover a world of insights, stories, and ideas—crafted
+          to inform, inspire, and spark curiosity.
+        </p>
       </section>
 
       <section className="min-h-screen bg-gray-100 p-8">
@@ -61,23 +55,26 @@ export default function Home() {
         </h2>
 
         {loading ? (
-          <p className="text-center text-gray-500">Loading blogs...</p>
+          <p className="text-center text-gray-500">
+            Loading blogs...
+          </p>
         ) : latestBlogs.length === 0 ? (
-          <p className="text-center text-gray-500">No blogs available.</p>
+          <p className="text-center text-gray-500">
+            No blogs available.
+          </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {latestBlogs.map((blog) => (
               <BlogCard
-              key={blog._id}
-              _id={blog._id}
-              title={blog.title}
-              date={blog.date}
-              category={blog.category?.name || blog.category}
-              description={blog.description}
-              image={blog.image}
+                key={blog._id}
+                _id={blog._id}
+                title={blog.title}
+                date={blog.date}
+                category={blog.category?.name || blog.category}
+                description={blog.description}
+                image={blog.image}
               />
-              ))}
-
+            ))}
           </div>
         )}
 
@@ -86,17 +83,18 @@ export default function Home() {
             <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">
               Explore More Blogs
             </h2>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {previewBlogs.map((blog) => (
-              <BlogCard
-              key={blog._id}
-              _id={blog._id}
-              title={blog.title}
-              date={blog.date}
-              category={blog.category?.name || blog.category}
-              description={blog.description}
-              image={blog.image}
-              />
+                <BlogCard
+                  key={blog._id}
+                  _id={blog._id}
+                  title={blog.title}
+                  date={blog.date}
+                  category={blog.category?.name || blog.category}
+                  description={blog.description}
+                  image={blog.image}
+                />
               ))}
             </div>
 

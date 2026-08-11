@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 
-dataBase();
+await dataBase();
 
 
 app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));

@@ -24,7 +24,7 @@ export default function SignUp({ closeModal }) {
     try {
 
       const res = await axios.post(
-        "http://localhost:3000/users/register",
+        `${import.meta.env.VITE_API_URL}/users/register`,
         {
           name,
           email,

@@ -33,9 +33,9 @@ export default function Dashboard() {
       };
 
       const [usersRes, blogsRes, categoriesRes] = await Promise.all([
-        axios.get("http://localhost:3000/users", config),
-        axios.get("http://localhost:3000/blogs", config),
-        axios.get("http://localhost:3000/categories", config),
+        axios.get(`${import.meta.env.VITE_API_URL}/users`, config),
+        axios.get(`${import.meta.env.VITE_API_URL}/blogs`, config),
+        axios.get(`${import.meta.env.VITE_API_URL}/categories`, config),
       ]);
 
       setStats({

@@ -35,14 +35,14 @@ function CreateCategory() {
 
       if (isEdit) {
         await axios.put(
-          `http://localhost:3000/categories/${id}`,
+          `${import.meta.env.VITE_API_URL}/categories/${id}`,
           formData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         alert("Category updated!");
       } else {
         await axios.post(
-          "http://localhost:3000/categories",
+          `${import.meta.env.VITE_API_URL}/categories`,
           formData,
           { headers: { Authorization: `Bearer ${token}` } }
         );

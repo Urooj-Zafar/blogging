@@ -9,7 +9,7 @@ export default function ManageCategories() {
   const token = localStorage.getItem("token");
 
   const fetchCategories = async () => {
-    const res = await axios.get("http://localhost:3000/categories");
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
     setCategories(res.data.data);
   };
 
@@ -21,7 +21,7 @@ export default function ManageCategories() {
     if (!window.confirm("Delete category?")) return;
 
     try {
-      await axios.delete(`http://localhost:3000/categories/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/categories/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

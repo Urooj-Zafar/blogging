@@ -17,7 +17,7 @@ export default function Blogs({openSignIn}) {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/blogs");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/blogs`);
         let fetchedBlogs = res.data.data || [];
 
         fetchedBlogs = fetchedBlogs

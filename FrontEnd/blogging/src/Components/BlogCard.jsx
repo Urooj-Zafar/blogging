@@ -17,7 +17,6 @@ export default function BlogCard({
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user") || "null");
-  // Show icons ONLY if both IDs exist AND match
   const isAdmin = user?.role === "admin";
   const showIcons = showActions && (isAdmin || authorId === userId);
  
@@ -25,7 +24,7 @@ export default function BlogCard({
     e.stopPropagation();
     if (!window.confirm("Delete this blog?")) return;
     try {
-      await axios.delete(`http://localhost:3000/blogs/${_id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/blogs/${_id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Blog deleted!");
@@ -42,7 +41,7 @@ export default function BlogCard({
       className="cursor-pointer bg-white rounded-xl shadow-md p-4 pt-10 hover:shadow-xl transition relative transform hover:-translate-y-1 duration-300"
     >
       <img
-        src={image ? `http://localhost:3000${image}` : "/default.jpg"}
+        src={image ? `${import.meta.env.VITE_API_URL}${image}` : "/default.jpg"}
         alt={title}
         className="h-40 w-full object-cover rounded mb-3"
       />

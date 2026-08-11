@@ -11,7 +11,7 @@ export default function Categories() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/categories");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
         setCategories(res.data.data);
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -28,7 +28,7 @@ export default function Categories() {
 
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/blogs");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/blogs`);
 
         const filteredBlogs = res.data.data.filter(
           (blog) => blog.category?.name === selectedCategory
@@ -75,7 +75,7 @@ export default function Categories() {
             <img
               src={
                 cat.image
-                  ? `http://localhost:3000${cat.image}`
+                  ? `${import.meta.env.VITE_API_URL}${cat.image}`
                   : "/default.jpg"
               }
               alt={cat.name}

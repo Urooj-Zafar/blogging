@@ -19,7 +19,7 @@ export default function CreateBlog() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    axios.get("http://localhost:3000/categories")
+    axios.get(`${import.meta.env.VITE_API_URL}/categories`)
       .then(res => setCategories(res.data.data))
       .catch(() => setError("Failed to load categories"));
   }, []);
@@ -29,7 +29,7 @@ export default function CreateBlog() {
 
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/blogs/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/blogs/${id}`);
         const blog = res.data.data;
 
         setTitle(blog.title);
@@ -61,8 +61,8 @@ export default function CreateBlog() {
     if (image) formData.append("image", image);
 
     const url = isEdit
-      ? `http://localhost:3000/blogs/${id}`
-      : "http://localhost:3000/blogs";
+      ? `${import.meta.env.VITE_API_URL}/blogs/${id}`
+      : `${import.meta.env.VITE_API_URL}/blogs`;
 
     const method = isEdit ? "put" : "post";
 

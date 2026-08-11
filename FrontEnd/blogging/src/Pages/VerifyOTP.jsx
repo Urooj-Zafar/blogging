@@ -21,7 +21,7 @@ export default function VerifyOTP({ openSignIn }) {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:3000/users/verify-otp",
+        `${import.meta.env.VITE_API_URL}/users/verify-otp`,
         {
           email,
           otp,
@@ -57,7 +57,7 @@ export default function VerifyOTP({ openSignIn }) {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/users/resend-otp",
+        `${import.meta.env.VITE_API_URL}/users/resend-otp`,
         {
           email,
         }

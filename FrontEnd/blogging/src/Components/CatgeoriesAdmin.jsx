@@ -14,7 +14,7 @@ export default function CategoriesAdmin() {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/categories");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
       setCategories(res.data.data);
     } catch (err) {
       console.error("Error fetching categories:", err);
@@ -29,7 +29,7 @@ export default function CategoriesAdmin() {
     if (image) formData.append("image", image);
 
     try {
-      await axios.post("http://localhost:3000/categories", formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/categories`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("Category created!");
@@ -56,7 +56,7 @@ export default function CategoriesAdmin() {
 
     try {
       await axios.put(
-        `http://localhost:3000/categories/${selectedCategory._id}`,
+        `${import.meta.env.VITE_API_URL}/categories/${selectedCategory._id}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -75,7 +75,7 @@ export default function CategoriesAdmin() {
     if (!window.confirm("Are you sure you want to delete this category?")) return;
 
     try {
-      await axios.delete(`http://localhost:3000/categories/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/categories/${id}`);
       alert("Category deleted!");
       fetchCategories();
     } catch (err) {
@@ -137,7 +137,7 @@ export default function CategoriesAdmin() {
         {categories.map((cat) => (
           <div key={cat._id} className="bg-white p-4 rounded shadow relative">
             <img
-              src={cat.image ? `http://localhost:3000${cat.image}` : "/default.jpg"}
+              src={cat.image ? `${import.meta.env.VITE_API_URL}${cat.image}` : "/default.jpg"}
               alt={cat.name}
               className="h-32 w-full object-cover mb-2 rounded"
             />

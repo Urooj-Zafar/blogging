@@ -20,7 +20,7 @@ export default function Model({ closeModal, openSignUp }) {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/users/login",
+        `${import.meta.env.VITE_API_URL}/users/login`,
         {
           email,
           password,

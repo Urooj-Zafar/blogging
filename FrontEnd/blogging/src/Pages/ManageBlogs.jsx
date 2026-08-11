@@ -11,7 +11,7 @@ export default function ManageBlogs() {
 
   const fetchBlogs = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/blogs");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/blogs`);
       setBlogs(res.data.data);
     } catch (err) {
       console.log(err);
@@ -26,7 +26,7 @@ export default function ManageBlogs() {
     if (!window.confirm("Delete this blog?")) return;
 
     try {
-      await axios.delete(`http://localhost:3000/blogs/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/blogs/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,7 +76,7 @@ export default function ManageBlogs() {
           <img
             src={
               blog.image
-                ? `http://localhost:3000${blog.image}`
+                ? `${import.meta.env.VITE_API_URL}${blog.image}`
                 : "/default.jpg"
             }
             alt={blog.title}

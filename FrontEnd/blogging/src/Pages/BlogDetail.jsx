@@ -17,7 +17,7 @@ export default function BlogDetail() {
       try {
 
         const res = await axios.get(
-          `http://localhost:3000/blogs/${id}`
+          `${import.meta.env.VITE_API_URL}/blogs/${id}`
         );
 
         setBlog(res.data.data);
@@ -46,7 +46,7 @@ export default function BlogDetail() {
 
 
       <img
-        src={`http://localhost:3000${blog.image}`}
+        src={`${import.meta.env.VITE_API_URL}${blog.image}`}
         className="w-full h-80 object-cover rounded mb-6"
         alt={blog.title}
       />

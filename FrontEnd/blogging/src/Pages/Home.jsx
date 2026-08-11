@@ -13,7 +13,7 @@ export default function Home() {
 
   const fetchBlogs = async (prependBlog = null) => {
     try {
-      const res = await axios.get("http://localhost:3000/blogs");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/blogs`);
       let fetchedBlogs = res.data.data || [];
       fetchedBlogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 

@@ -34,7 +34,7 @@ export default function Profile() {
   const fetchMyBlogs = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:3000/blogs"
+        `${import.meta.env.VITE_API_URL}/blogs`
       );
 
       const myBlogs = res.data.data.filter(
@@ -101,7 +101,7 @@ export default function Profile() {
       }
 
       const res = await axios.put(
-        `http://localhost:3000/users/profile/${user._id}`,
+        `${import.meta.env.VITE_API_URL}/users/profile/${user._id}`,
         formData,
         {
           headers: {
@@ -167,7 +167,7 @@ export default function Profile() {
             <img
               src={
                 user?.profileImage
-                  ? `http://localhost:3000${user.profileImage}`
+                  ? `${import.meta.env.VITE_API_URL}${user.profileImage}`
                   : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                       user?.name || "User"
                     )}`
@@ -287,7 +287,7 @@ export default function Profile() {
                   selectedFile
                     ? URL.createObjectURL(selectedFile)
                     : user?.profileImage
-                    ? `http://localhost:3000${user.profileImage}`
+                    ? `${import.meta.env.VITE_API_URL}${user.profileImage}`
                     : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                         user?.name || "User"
                       )}`

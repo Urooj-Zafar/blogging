@@ -11,7 +11,7 @@ export default function ManageUsers() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/users", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -31,7 +31,7 @@ export default function ManageUsers() {
     if (!window.confirm("Delete this user?")) return;
 
     try {
-      await axios.delete(`http://localhost:3000/users/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -77,7 +77,7 @@ export default function ManageUsers() {
                   <img
                     src={
                       user.profileImage
-                        ? `http://localhost:3000${user.profileImage}`
+                        ? `${import.meta.env.VITE_API_URL}${user.profileImage}`
                         : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                             user.name || "User"
                           )}`

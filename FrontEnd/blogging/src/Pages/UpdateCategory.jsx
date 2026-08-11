@@ -14,7 +14,7 @@ export default function UpdateCategory() {
     const fetchCategory = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/categories/${id}`
+          `${import.meta.env.VITE_API_URL}/categories/${id}`
         );
         setName(res.data.data.name);
         setLoading(false);
@@ -33,7 +33,7 @@ export default function UpdateCategory() {
 
     try {
       await axios.put(
-        `http://localhost:3000/categories/${id}`,
+        `${import.meta.env.VITE_API_URL}/categories/${id}`,
         formData
       );
       alert("Category updated!");

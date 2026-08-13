@@ -21,6 +21,32 @@ export default function Profile() {
 
   const [updating, setUpdating] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const getInitials = (name) => {
+    if (!name) return "U";
+
+    const words = name.trim().split(/\s+/);
+
+    if (words.length === 1) {
+      return words[0].substring(0, 2).toUpperCase();
+    }
+
+    return (
+      words[0][0] + words[words.length - 1][0]
+    ).toUpperCase();
+  };
+
+  const getProfileImage = (image) => {
+    if (!image) return null;
+
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image;
+    }
+
+    return `${API_URL}${image}`;
+  };
+
   const handleDeleteSuccess = (id) => {
     setBlogs((prev) =>
       prev.filter((blog) => blog._id !== id)
@@ -34,7 +60,7 @@ export default function Profile() {
   const fetchMyBlogs = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/blogs`
+        `${API_URL}/blogs`
       );
 
       const myBlogs = res.data.data.filter(
@@ -101,7 +127,7 @@ export default function Profile() {
       }
 
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/users/profile/${user._id}`,
+        `${API_URL}/users/profile/${user._id}`,
         formData,
         {
           headers: {
@@ -113,14 +139,12 @@ export default function Profile() {
       if (res.data.status) {
         const updatedUser = res.data.user;
 
-       
         localStorage.setItem(
           "user",
           JSON.stringify(updatedUser)
         );
 
         setUser(updatedUser);
-
         setEditOpen(false);
 
         alert("Profile updated successfully!");
@@ -129,7 +153,6 @@ export default function Profile() {
           res.data.message || "Profile update failed"
         );
       }
-
     } catch (err) {
       console.log("Profile update error:", err);
 
@@ -142,15 +165,22 @@ export default function Profile() {
     }
   };
 
-  return (
-    <div>
+  const currentImage = getProfileImage(
+    user?.profileImage
+  );
 
-     
-      <section className="bg-black text-white py-16">
+  const previewImage = selectedFile
+    ? URL.createObjectURL(selectedFile)
+    : currentImage;
+
+  return (
+    <div className="overflow-x-hidden">
+
+      <section className="bg-black text-white py-5 md:py-16">
 
         <div className="max-w-6xl mx-auto px-6">
 
-          <div className="flex justify-end mb-6">
+          <div className="flex justify-end mb-5">
 
             <button
               onClick={openEditProfile}
@@ -161,29 +191,29 @@ export default function Profile() {
 
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] items-center gap-6 md:gap-8">
 
-          <div className="flex items-center gap-8">
+            <div className="flex justify-center md:justify-start">
+              {currentImage ? (
+                <img
+                  src={currentImage}
+                  alt="Profile"
+                  className="w-28 h-28 min-w-28 min-h-28 shrink-0 rounded-full border-4 border-orange-500 object-cover"
+                />
+              ) : (
+                <div className="w-28 h-28 min-w-28 min-h-28 shrink-0 rounded-full border-4 border-orange-500 bg-orange-500 flex items-center justify-center text-white text-3xl font-bold">
+                  {getInitials(user?.name)}
+                </div>
+              )}
+            </div>
 
-            <img
-              src={
-                user?.profileImage
-                  ? user.profileImage
-                  : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                      user?.name || "User"
-                    )}`
-              }
-              alt="Profile"
-              className="w-28 h-28 rounded-full border-4 border-orange-500 object-cover"
-            />
+            <div className="min-w-0 text-center md:text-left">
 
-            {/* User Information */}
-            <div>
-
-              <h1 className="text-4xl font-bold">
+              <h1 className="text-3xl md:text-4xl font-bold break-words">
                 {user?.name}
               </h1>
 
-              <p className="text-gray-300 mt-2">
+              <p className="text-gray-300 mt-2 break-all">
                 {user?.email}
               </p>
 
@@ -199,9 +229,6 @@ export default function Profile() {
 
       </section>
 
-
-      {/* ================= MY BLOGS ================= */}
-
       <div className="max-w-7xl mx-auto py-10 px-6">
 
         <h2 className="text-3xl font-bold mb-8">
@@ -209,21 +236,15 @@ export default function Profile() {
         </h2>
 
         {loading ? (
-
           <p>Loading...</p>
-
         ) : blogs.length === 0 ? (
-
           <p>
             You haven't created any blogs yet.
           </p>
-
         ) : (
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             {blogs.map((blog) => (
-
               <BlogCard
                 key={blog._id}
                 _id={blog._id}
@@ -244,25 +265,19 @@ export default function Profile() {
                 showActions={true}
                 onDeleteSuccess={handleDeleteSuccess}
               />
-
             ))}
 
           </div>
-
         )}
 
       </div>
 
-
-      {/* ================= UPDATE PROFILE MODAL ================= */}
-
       {editOpen && (
 
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4 overflow-y-auto">
 
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-5 md:p-6 my-6 overflow-hidden">
 
-            {/* Modal Header */}
             <div className="flex justify-between items-center mb-6">
 
               <h2 className="text-2xl font-bold">
@@ -278,25 +293,21 @@ export default function Profile() {
 
             </div>
 
-
-            {/* Profile Image */}
             <div className="flex flex-col items-center mb-6">
 
-              <img
-                src={
-                  selectedFile
-                    ? URL.createObjectURL(selectedFile)
-                    : user?.profileImage
-                    ? user.profileImage
-                    : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                        user?.name || "User"
-                      )}`
-                }
-                alt="Profile"
-                className="w-24 h-24 rounded-full object-cover border-4 border-orange-500 mb-3"
-              />
+              {previewImage ? (
+                <img
+                  src={previewImage}
+                  alt="Profile"
+                  className="w-24 h-24 min-w-24 min-h-24 rounded-full object-cover border-4 border-orange-500 mb-3"
+                />
+              ) : (
+                <div className="w-24 h-24 min-w-24 min-h-24 rounded-full bg-orange-500 text-white flex items-center justify-center text-2xl font-bold border-4 border-orange-500 mb-3">
+                  {getInitials(name)}
+                </div>
+              )}
 
-              <label className="cursor-pointer text-orange-500 hover:text-orange-600 font-semibold">
+              <label className="cursor-pointer text-orange-500 hover:text-orange-600 font-semibold text-center">
 
                 Change Profile Picture
 
@@ -311,8 +322,6 @@ export default function Profile() {
 
             </div>
 
-
-            {/* Name */}
             <label className="block font-semibold mb-1">
               Name
             </label>
@@ -325,8 +334,6 @@ export default function Profile() {
               placeholder="Enter your name"
             />
 
-
-            {/* Email */}
             <label className="block font-semibold mb-1">
               Email
             </label>
@@ -339,8 +346,6 @@ export default function Profile() {
               placeholder="Enter your email"
             />
 
-
-            {/* Password */}
             <label className="block font-semibold mb-1">
               New Password
             </label>
@@ -353,8 +358,6 @@ export default function Profile() {
               placeholder="Leave empty to keep current password"
             />
 
-
-            {/* Buttons */}
             <div className="flex justify-end gap-3">
 
               <button
